@@ -35,7 +35,7 @@ employee(employee &e1){
 }
 
 ~employee(){
-		cout<<"Contructor destroyed"<<endl;
+//		cout<<"Contructor destroyed"<<endl;
 }
 
 inline float netpay(){
@@ -59,9 +59,27 @@ employee e1;
 	e1.name = "Kashish";
 	e1.gender = false;
 	e1.dept = "CEO";
-	e1.salary = 200000000;
+	e1.salary = 200;
+
 
 		e1.display1();
 		e1.display();
+employee e2;
+
+	e2.name = "Neil";
+	e2.gender = true;
+	e2.dept = "HR";
+	e2.salary = 100;
+
+		e2.display();
+
+employee e3;
+
+	e3.name = "Shalin";
+	e3.gender = true;
+	e3.dept = "HK";
+	e3.salary = 10;
+
+		e3.display();
 return 0;
 }
