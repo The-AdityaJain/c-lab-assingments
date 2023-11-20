@@ -1,0 +1,73 @@
+#include <stdio.h>  
+
+int top = -1 , array[], size=5;  
+void push();  
+void pop();  
+  
+int main()
+{
+   
+    int choice;  
+    while (1)  
+    {  
+        printf("\nPerform operations on the stack:");  
+        printf("\n1.Push the element\n2.Pop the element\n3.End");  
+        printf("\n\nEnter the choice: ");  
+        scanf("%d", &choice);  
+        switch (choice)  
+        {  
+        case 1:  
+            push();  
+            break;  
+        case 2:  
+            pop();  
+            break;  
+        case 3:  
+            End( );  
+        default:  
+            printf("\nInvalid choice!!");  
+        }  
+    }  
+}  
+void push()  
+{  
+    int x;  
+    if (top == size - 1)  
+    {  
+        printf("\nOverflow!!");  
+    }  
+    else  
+    {  
+        printf("\nEnter the element to be added onto the stack: ");  
+        scanf("%d", &x);  
+        top = top + 1;  
+        array[top] = x;  
+    }  
+}  
+void pop()  
+{  
+    if (top == -1)  
+    {  
+        printf("\nUnderflow!!");  
+    }  
+    else  
+    {  
+        printf("\nPopped element: %d", array[top]);  
+        top = top - 1;  
+    }  
+}  
+int isFull(Stack *stack) {
+    if (array	->top == size - 1) {
+        printf("Stack is full\n");
+    } else {
+        printf("Stack is not full\n");
+    }
+}
+
+void isEmpty(Stack *stack) {
+    if (stack->top == -1) {
+        printf("Stack is empty\n");
+    } else {
+        printf("Stack is not empty\n");
+    }
+}
