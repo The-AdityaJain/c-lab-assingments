@@ -1,0 +1,142 @@
+#include <stdio.h>
+#include<ctype.h>
+
+
+#define MAX 5
+int top = -1;
+char stk[MAX];
+
+int isFull() {
+    if (top == MAX - 1) {
+        return 1;
+    }
+    else {
+       return 0;
+    }
+}
+int isEmpty() {
+    if (top == -1) {
+        return 1;
+    }
+    else {
+        return 0;
+    }
+}
+void push(char item){
+	if(!isFull()){
+		top=top+1;
+		stk[top]=item;
+	}
+	else{
+		printf("STACK IS FULL\n");
+		return 0;
+	}
+}
+char pop(){
+        char temp;
+        if(!isEmpty()){
+		temp=stk[top];
+		top=top-1;
+		return temp;
+	}
+	else{
+		printf("STACK IS EMPTY\n");
+		return 0;
+	}
+}
+int main(){
+	char item;
+	int choice;
+	do{  
+        	printf("\nPerform operations on the stack :");  
+        	printf("\n1.Push the element\n2.Pop the element\n3.End");  
+        	printf("\n\nEnter the choice : ");  
+        	scanf("%d", &choice);  
+        	switch (choice){  
+        		case 1:  
+        			printf("Enter item to push : ");
+        			scanf(" %c",&item);
+            			push(item);  
+            			break;  
+        		case 2:  
+            			item = pop();  
+            			printf("popped item is %c",item);
+            			break;  
+            		case 3:
+            			break;
+        	}  
+    	}while(choice!=3);  
+    	char inexp[20],postexp[20];
+    	printf("Enter the string : ");
+    	scanf("%s",&inexp);
+    	in_post(inexp);
+    	
+}
+int icp(char ch){
+	if(ch=='+'||ch=='-'){
+		return 1;
+	}
+	if(ch=='*'||ch=='/'){
+		return 2;
+	}
+	if(ch=='^'){
+		return 4;
+	}
+	if(ch=='('){
+		return 5;
+	}
+	else{
+		return 0;
+	}
+}
+int isp(char ch){
+	if(ch=='+'||ch=='-'){
+		return 1;
+	}
+	if(ch=='*'||ch=='/'){
+		return 2;
+	}
+	if(ch=='^'){
+		return 3;
+	}
+	else{
+		return 0;
+	}
+}
+void in_post(char inexp[20]){
+	char postexp[20];
+	int k=0,i=0;
+	char tkn=inexp[i];
+	while(tkn!='\0'){
+		if(isalpha(tkn)){
+		postexp[k]=inexp[i];
+		}
+		else{
+			if(tkn=='('){
+				push('(');
+			}
+			else {
+				if(tkn==')'){
+					while(tkn=pop(')')!='('){
+						postexp[k]=tkn;
+						k++;
+					}
+				}
+				else{
+					while(!isEmpty() && isp(stk[top]) >= icp(tkn)){
+						postexp[k]=pop();
+						k++;
+					}
+				}
+			}
+		}
+		i++;
+		tkn=inexp[i];
+	}
+	while(!isEmpty()){
+		postexp[k]=pop();
+		k++;
+	}
+	postexp[k]='\0';
+	printf("Expression = %s",postexp);
+}
