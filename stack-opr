@@ -1,10 +1,10 @@
 #include <stdio.h>
 #include<ctype.h>
+#include<stdlib.h>
 
-
-#define MAX 5
-int top = -1;
+#define MAX 20
 char stk[MAX];
+int top = -1;
 
 int isFull() {
     if (top == MAX - 1) {
@@ -29,7 +29,6 @@ void push(char item){
 	}
 	else{
 		printf("STACK IS FULL\n");
-		return 0;
 	}
 }
 char pop(){
@@ -41,37 +40,22 @@ char pop(){
 	}
 	else{
 		printf("STACK IS EMPTY\n");
-		return 0;
+		return '\0';
 	}
 }
-int main(){
-	char item;
-	int choice;
-	do{  
-        	printf("\nPerform operations on the stack :");  
-        	printf("\n1.Push the element\n2.Pop the element\n3.End");  
-        	printf("\n\nEnter the choice : ");  
-        	scanf("%d", &choice);  
-        	switch (choice){  
-        		case 1:  
-        			printf("Enter item to push : ");
-        			scanf(" %c",&item);
-            			push(item);  
-            			break;  
-        		case 2:  
-            			item = pop();  
-            			printf("popped item is %c",item);
-            			break;  
-            		case 3:
-            			break;
-        	}  
-    	}while(choice!=3);  
-    	char inexp[20],postexp[20];
-    	printf("Enter the string : ");
-    	scanf("%s",&inexp);
-    	in_post(inexp);
-    	
+void display() {
+    if (isEmpty()) {
+        printf("Stack is empty\n");
+        return;
+    }
+
+    printf("Stack elements: ");
+    for (int i = 0; i <= top; ++i) {
+        printf("%c ", stk[i]);
+    }
+    printf("\n");
 }
+
 int icp(char ch){
 	if(ch=='+'||ch=='-'){
 		return 1;
@@ -110,33 +94,63 @@ void in_post(char inexp[20]){
 	while(tkn!='\0'){
 		if(isalpha(tkn)){
 		postexp[k]=inexp[i];
-		}
-		else{
+		k++;
+		}//if ends
+		else{	//1 else
 			if(tkn=='('){
 				push('(');
-			}
-			else {
+			}	//if ends
+			else {	//2 else
 				if(tkn==')'){
-					while(tkn=pop(')')!='('){
+					while((tkn=pop())!='('){   //while(!isempty() && stack[top]!='(')
 						postexp[k]=tkn;
 						k++;
-					}
-				}
-				else{
+					}	//while ends
+				}	//if ends
+				else{	//3 else
 					while(!isEmpty() && isp(stk[top]) >= icp(tkn)){
 						postexp[k]=pop();
 						k++;
-					}
-				}
-			}
-		}
+					}	//while ends
+                push(tkn);
+				}	//3 else ends
+			}	//2 else ends
+		}	//1 else ends
 		i++;
 		tkn=inexp[i];
-	}
+	}	//while ends
 	while(!isEmpty()){
 		postexp[k]=pop();
 		k++;
 	}
 	postexp[k]='\0';
 	printf("Expression = %s",postexp);
+}
+int main(){
+	char item;
+	int choice;
+	do{  
+        	printf("\nPerform operations on the stack :");  
+        	printf("\n1.Push the element\n2.Pop the element\n3.End");  
+        	printf("\n\nEnter the choice : ");  
+        	scanf("%d", &choice);  
+        	switch (choice){  
+        		case 1:  
+        			printf("Enter item to push : ");
+        			scanf(" %c",&item);
+            			push(item);  
+            			break;  
+        		case 2:  
+            			item = pop();  
+            			printf("popped item is %c",item);
+            			break;  
+            		case 3:
+            			break;
+        	}  
+    	}while(choice!=3);  
+    	char inexp[20],postexp[20];
+    	printf("Enter the string : ");
+    	scanf("%s",&inexp);
+    	in_post(inexp);
+    	
 }
